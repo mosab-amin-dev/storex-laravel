@@ -38,4 +38,13 @@ class AuthController extends Controller
         Auth::logout();
         return $this->apiResponse(null,self::STATUS_OK,__('site.logout_success'));
     }
+    public function refresh()
+    {
+        try {
+            $token = Auth::refresh();
+            return $this->apiResponse(['user' => new UserResource(Auth::user()), 'token' => $token ],self::STATUS_OK,__('site.refresh_success'));
+        } catch (\Exception $exception){
+            return $this->apiResponse(null,self::STATUS_UNAUTHORIZED,__('site.invalid_token'));
+        }
+    }
 }
