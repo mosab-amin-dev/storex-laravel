@@ -25,9 +25,11 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 Route::apiResource('categories' , CategoryController::class);
 
+Route::get('categories/{category_id}/movies',[MovieController::class,'category_movies']);
+
 Route::apiResource('users'      ,UserController::class);
 
-Route::prefix('movies')->controller(MovieController::class)->group(function () {
+Route::prefix('movies')->group(function () {
 Route::apiResource('/'     , MovieController::class);
 Route::post('search',[MovieController::class,'search']);
 });

@@ -61,6 +61,15 @@ class MovieController extends Controller {
         return $this->apiResponse([], self::STATUS_OK, __('site.there_is_no_data'));
     }
 
+    public function category_movies($category_id) {
+        $movies = Movie::with(['category'])->where('category_id',$category_id)->paginate();
+        if (count($movies) > 0) {
+            $paginateData = $this->formatPaginateData($movies);
+            return $this->apiResponse(MovieResource::collection($movies), self::STATUS_OK, __('site.get_successfully'), $paginateData);
+        }
+        return $this->apiResponse([], self::STATUS_OK, __('site.there_is_no_data'));
+    }
+
     public function search(SearchRequest $request) {
         $search_statement = $request->search_statement;
         $filtered_categories = [];
