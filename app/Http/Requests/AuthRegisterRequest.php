@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMovieRequest extends FormRequest
+class AuthRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,10 @@ class UpdateMovieRequest extends FormRequest
     public function rules()
     {
         return [
-                'title'=>'nullable|string|max:120',
-                'description'=>'nullable|string|max:320',
-                'image'=>'nullable|image|max:350',
-                'rate'=>'nullable|numeric|between:0,5',
-                'category_id'=>'nullable|exists:categories,id'
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email',
+                'birth_date'=>'required|date_format:Y-m-d|before:'.Carbon::now(),
+                'password' => 'required|string|min:6',
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
 
-class MovieResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,12 +18,9 @@ class MovieResource extends JsonResource
     public function toArray($request) {
         return [
                 "id" => $this->id,
-                'title' => $this->title,
-                'description' => $this->description,
-                'image' => $this->full_path_image,
-                'rate' => $this->rate,
-                'category_id' => $this->category_id,
-                'category' => new CategoryResource($this->whenLoaded('category'))
+                "name" => $this->name,
+                "email" => $this->email,
+                "birth_date" => $this->birth_date
         ];
     }
 }

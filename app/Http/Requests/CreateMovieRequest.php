@@ -13,7 +13,7 @@ class CreateMovieRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,12 @@ class CreateMovieRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            //
+                'title' => 'required|string|max:120',
+                'description' => 'required|string|max:320',
+                'image' => 'nullable|image|max:350',
+                'category_id' => 'required|exists:categories,id'
         ];
     }
 }
